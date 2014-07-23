@@ -1,0 +1,23 @@
+#jError {
+	pointer-events: none; 
+	position: absolute;
+}
+
+#jLoading {
+	pointer-events: none; 
+	position: absolute; 
+	visibility: hidden;
+}
+
+#browserError {
+	pointer-events: none; 
+	position: absolute;
+	visibility: hidden;
+}
+
+@font-face {
+	font-family:"Space Invaders";
+	src:url("font/space_invaders.eot?") format("eot"),url("font/space_invaders.woff") format("woff"),url("font/space_invaders.ttf") format("truetype"),url("font/space_invaders.svg#Space-Invaders") format("svg");
+	font-weight:normal;
+	font-style:normal;
+}

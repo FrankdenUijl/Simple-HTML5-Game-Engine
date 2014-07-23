@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="description" content="Space Invaders">
+		<meta name="keywords" content="space, invaders, example, HTML5, canvas">
+		<meta name="author" content="Frank den Uijl">
+		<meta id="version" name="version" content="0.1">
+		<meta name="robots" content="index, follow">
+		<meta name="revisit-after" content="3 days">
+		<link rel="stylesheet" type="text/css" href="styles.css"/>
+		<script type="text/javascript" type="text/javascript" src="../../SimpleGameEngine.js"></script>
+		<script type="text/javascript" type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" type="text/javascript" src="js/misc.js"></script>
+		<script type="text/javascript" >
+			function a(){
+				document.getElementById("jError").style.visibility="hidden";
+				document.getElementById("jLoading").style.visibility="hidden"
+				var is_chrome = navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
+				if(!is_chrome)
+					document.getElementById("browserError").style.visibility = "visible";
+			}
+		</script>
+	</head>
+	<body onload="a()">
+		<div id="jError" style="font-family:Space Invaders">Your javascript is disabled, or there is an error.</div>
+		<div id="jLoading">Space Invaders is Loading...</div>
+		<div id="browserError">Space Invaders currently only runs in <a href="http://www.google.com/chrome" >Chrome</a>, sorry for the inconvenience.</div>
+		<script type="text/javascript" >
+			document.getElementById("jError").style.visibility="hidden";
+			document.getElementById("jLoading").style.visibility="visible";
+		</script>
+	</body>
+</html>
