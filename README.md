@@ -42,7 +42,7 @@ This game engine is build to make fast 2D games.
   
 ## Examples
 
-I am planning to add some examples to show how it works
+Add an example of an strategy game, Space Invaders isn't done yet.
 
 ## How to use
 ``` js
