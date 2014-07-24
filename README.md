@@ -45,7 +45,7 @@ This game engine is build to make fast 2D games.
 I am planning to add some examples to show how it works
 
 ## How to use
-
+``` js
 var MyGame = _game(width, height, background_color, amount_layers)
 
 MyGame._mouseMoveAction = function(e){
@@ -74,5 +74,5 @@ var onload = function(){
 
 var MyImage = _addImage("images/game/army.png") //returns a image 
 MyImage.onload = onload();
-
+```
 
