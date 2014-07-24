@@ -13,9 +13,43 @@ function main(){
 	var width = 224*2
 	var height = 256*2
 	this.canvas = new _game(width, height, background, layers);
+	var that = this
+	this.canvas._keyboardUpAction = function(e){that.keyboardUp(e);};
+	this.canvas._keyboardDownAction = function(e){that.keyboardDown(e);};
 	this.globals();
 	this.initIntro();
 	this.ui();
+	this.waitForSpaceBar = false
+}
+
+main.prototype.keyboardUp = function(e){
+	if (this.introAnimation){
+		this.introTick = 25
+	}
+}
+
+main.prototype.keyboardDown = function(e){
+	if (this.introAnimation){
+		this.introTick = 75
+	} 
+	if (this.waitForSpaceBar && this.canvas._isKeySelected('Enter') ) {
+		this.waitForSpaceBar = false
+		this.canvas._removeFromCanvas(this.intro.push, 0);
+		this.canvas._removeFromCanvas(this.ui.score2, 0);
+		
+		this.canvas._addToCanvas(this.intro.playPlayer, 0);
+		
+		var that = this;
+		setIntervalX(function(){that.canvas._addToCanvas(that.ui.score1, 0);},500,6)
+		setTimeout(function(){setIntervalX(function(){that.canvas._removeFromCanvas(that.ui.score1, 0);},500,5)}, 250)
+		setTimeout(function(){that.canvas._removeFromCanvas(that.intro.playPlayer, 0); that.startGame()}, 3000)
+	}
+}
+
+main.prototype.startGame = function(){
+	this.introAnimation = false
+	
+	
 }
 
 main.prototype.globals = function(){
@@ -136,7 +170,7 @@ main.prototype.initIntro = function(){
 	this.canvas._addToCanvas(p10, 0);
 	this.intro.p10 = p10;
 	
-	var push = new _text("P U S H <br> <br> O N L Y    1 P L A Y E R    B U T T O N")
+	var push = new _text("P U S H    E N T E R <br> <br> O N L Y    1 P L A Y E R")
 	push._font = this.font
 	push._color = '#ffffff'
 	push._align = 'center'
@@ -158,7 +192,9 @@ main.prototype.initIntro = function(){
 	this.intro.playPlayer = playPlayer;
 	
 	this.step = 0
+	this.introAnimation = true
 	this.animateIntro()
+	
 }
 
 main.prototype.animateIntro = function(){
@@ -194,19 +230,18 @@ main.prototype.animateIntro = function(){
 		this.canvas._removeFromCanvas(this.intro.name, 0);
 		
 		this.canvas._addToCanvas(this.intro.push, 0);
-	} if (this.step == lengthP10 + 120) {
-		this.canvas._removeFromCanvas(this.intro.push, 0);
-		this.canvas._removeFromCanvas(this.ui.score2, 0);
-		
-		this.canvas._addToCanvas(this.intro.playPlayer, 0);
-	}
-	
+		this.waitForSpaceBar = true
+		animation = false
+	} 
+
 	this.step++;
 	
 	this.canvas._draw(0);
 	
-	var that = this;
-	setTimeout(function(){that.animateIntro()}, 1000 / that.introTick);
+	if(this.introAnimation){
+		var that = this;
+		setTimeout(function(){that.animateIntro()}, 1000 / that.introTick);
+	}
 }
 
 main.prototype.animateAlien = function(){

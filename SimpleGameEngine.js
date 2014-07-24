@@ -38,10 +38,13 @@ function _game(_width, _height, _background, _cIndexLayers){
 	this._width = _width;
 	this._height = _height;
 	this._canvasAmount = 0;
+	this._key = [];
 	this._mouseMoveAction = function(e){};
 	this._mouseDownAction = function(e){};
 	this._mouseUpAction = function(e){};
 	this._mouseRightAction = function(e){};
+	this._keyboardUpAction = function(e){};
+	this._keyboardDownAction = function(e){};
 	for (var _i = 0; _i < _cIndexLayers; _i++){
 		this._addCanvas();
 		if(_i != _cIndexLayers-1){
@@ -57,6 +60,133 @@ function _game(_width, _height, _background, _cIndexLayers){
 	document.getElementById('layer'+(this._canvasAmount-1)).oncontextmenu = function(){that._mouseRight.apply(that, arguments); delete that};
 	document.getElementById('layer'+(this._canvasAmount-1)).onselectstart = function(){ return false; };
 	document.getElementById('layer'+(this._canvasAmount-1)).onmouseout  = function(){that._mouseOut.apply(that, arguments); delete that};
+
+	window.onkeydown = function(){that._onKeyDown.apply(that, arguments); delete that};
+	window.onkeyup = function(){that._onKeyUp.apply(that, arguments); delete that};
+	window.onblur = function(){that._onBlur.apply(that, arguments); delete that};
+}
+
+_game.prototype._onKeyDown = function(e){
+	var keyCode = ('which' in e) ? e.which : e.keyCode;
+	var index = this._key.indexOf(keyCode);
+	if(index == -1){
+		this._key.push(keyCode);
+	}
+	this._keyboardDownAction(e)
+}
+
+_game.prototype._onKeyUp = function(e){
+	var keyCode = ('which' in e) ? e.which : e.keyCode;
+	var index = this._key.indexOf(keyCode);
+	if(index != -1){
+		this._key.splice(index, 1);
+	}
+	this._keyboardUpAction()
+}
+
+_game.prototype._onBlur = function(e){
+	this._key = [];
+	this._keyboardUpAction()
+}
+
+_game.prototype._isKeySelected = function(keyCheck){
+	var key = {
+		'Backspace': 8,
+		'Tab': 9,
+		'Enter': 13,
+		'Shift': 16,
+		'Ctrl': 17,
+		'Alt': 18,
+		'Pause': 19,
+		'Capslock': 20,
+		'Esc': 27,
+		'Pageup': 33,
+		'Pagedown': 34,
+		'End': 35,
+		'Home': 36,
+		'Leftarrow': 37,
+		'Uparrow': 38,
+		'Rightarrow': 39,
+		'Downarrow': 40,
+		'Insert': 45,
+		'Delete': 46,
+		'0': 48,
+		'1': 49,
+		'2': 50,
+		'3': 51,
+		'4': 52,
+		'5': 53,
+		'6': 54,
+		'7': 55,
+		'8': 56,
+		'9': 57,
+		'a': 65,
+		'b': 66,
+		'c': 67,
+		'd': 68,
+		'e': 69,
+		'f': 70,
+		'g': 71,
+		'h': 72,
+		'i': 73,
+		'j': 74,
+		'k': 75,
+		'l': 76,
+		'm': 77,
+		'n': 78,
+		'o': 79,
+		'p': 80,
+		'q': 81,
+		'r': 82,
+		's': 83,
+		't': 84,
+		'u': 85,
+		'v': 86,
+		'w': 87,
+		'x': 88,
+		'y': 89,
+		'z': 90,
+		'0numpad': 96,
+		'1numpad': 97,
+		'2numpad': 98,
+		'3numpad': 99,
+		'4numpad': 100,
+		'5numpad': 101,
+		'6numpad': 102,
+		'7numpad': 103,
+		'8numpad': 104,
+		'9numpad': 105,
+		'Multiply': 106,
+		'Plus': 107,
+		'Minut': 109,
+		'Dot': 110,
+		'Slash1': 111,
+		'F1': 112,
+		'F2': 113,
+		'F3': 114,
+		'F4': 115,
+		'F5': 116,
+		'F6': 117,
+		'F7': 118,
+		'F8': 119,
+		'F9': 120,
+		'F10': 121,
+		'F11': 122,
+		'F12': 123,
+		'equal': 187,
+		'Coma': 188,
+		'Slash': 191,
+		'Backslash': 220
+	}
+	
+	console.log(this._key)
+	if (typeof key[keyCheck] != "undefined"){
+		if (this._key.indexOf(key[keyCheck]) != -1){
+			console.log('yo')
+			return true;
+		}
+	}
+	return false;
 }
 
 _game.prototype._mouseRight = function(e){
