@@ -3,6 +3,9 @@ Simple-HTML5-Game-Engine
 
 A simple to use HTML5 Canvas Engine for 2D Games. You can add text, buttons, spites and group them. As stated, this is a very simple game engine but can be easy expaned.
 
+Example:
+http://frankdenuijl.nl/space_invaders/
+
 ## Features
 
 This game engine is build to make fast 2D games. 
